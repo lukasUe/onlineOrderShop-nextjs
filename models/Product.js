@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import {Schema, model, models} from "mongoose";
 
 const ProductSchema = new mongoose.Schema({
     designation: {
@@ -47,8 +48,8 @@ const ProductSchema = new mongoose.Schema({
     },
 },
 
-{ timestamps: true }
+//{ timestamps: true }
 
 )
 
-export default mongoose.models.Product || mongoose.model("Product", ProductSchema)
+export default mongoose.models.Product || mongoose.model("Product", ProductSchema);

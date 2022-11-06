@@ -31,7 +31,7 @@ const jsondb = {
                     price: 4,
                 },
                 {
-                    text: "extra scharf",
+                    text: "extra kalt",
                     price: 0.5
                 },
             ]
@@ -49,7 +49,7 @@ const jsondb = {
                     price: 4,
                 },
                 {
-                    text: "extra scharf",
+                    text: "extra eis",
                     price: 0.5
                 },
             ]
@@ -67,7 +67,7 @@ const jsondb = {
                     price: 4,
                 },
                 {
-                    text: "extra scharf",
+                    text: "extra veggie",
                     price: 0.5
                 },
             ]
@@ -103,7 +103,7 @@ const jsondb = {
                     price: 4,
                 },
                 {
-                    text: "extra scharf",
+                    text: "extra tomatensouce",
                     price: 0.5
                 },
             ]
@@ -115,16 +115,7 @@ const jsondb = {
             price: 2.50,
             url: 'muffin',
             image: '/pics/products/muffin.jpg',
-            extras: [
-                {
-                    text: "doppelt",
-                    price: 4,
-                },
-                {
-                    text: "extra scharf",
-                    price: 0.5
-                },
-            ]
+            
         },
         {
             designation: 'Pizza',
@@ -157,7 +148,7 @@ const jsondb = {
                     price: 4,
                 },
                 {
-                    text: "extra scharf",
+                    text: "extra cross",
                     price: 0.5
                 },
             ]

@@ -1,13 +1,15 @@
-import { useRouter } from "next/router";
-import jsondb from "../../jsonDb/products";
+// import { useRouter } from "next/router";
+// import jsondb from "../../jsonDb/products";
 import Link from "next/link";
 import Image from "next/image";
+import mongodb from "../../utils/mongodb";
+import Product from "../../models/Product";
 import { ListGroup, Button, ListGroupItem } from "react-bootstrap";
 
-export default function Productsite() {
-    const router = useRouter();
-    const { url } = router.query;
-    const product = jsondb.products.find(a => a.url === url);
+export default function Productsite({product}) {
+    //const router = useRouter();
+    //const { url } = router.query;
+    //const product = jsondb.products.find(a => a.url === url);
 
     if (!product) {
         return (
@@ -46,9 +48,15 @@ export default function Productsite() {
                             {product.description}
                         </ListGroupItem>
                         <ListGroupItem>
-                            Extras:
+                            {product.extras.length ? "Extras:" : <p></p>}
+                            {product.extras.map((extra) => (
+                                <span key={extra.name}>
+                                    {extra.text}<input className="form-check-input me-2" type="checkbox" />
+                                </span>
+                            ))}
+                            {/* Extras:
                             doppelt <input className="form-check-input me-2" type="checkbox" />
-                            extra Pommes <input className="form-check-input me-2" type="checkbox" />
+                            extra Pommes <input className="form-check-input me-2" type="checkbox" /> */}
                         </ListGroupItem>
                         <ListGroupItem>
                             <input className="form-control w-50" type="number" placeholder="1" min="1"></input>
@@ -66,4 +74,15 @@ export default function Productsite() {
         </div>
     )
 }
+
+export async function getServerSideProps(context) {
+    const url = context.params.url;
+    await mongodb.dbConnect();
+    const product = await Product.findOne({url}).lean();
+    return {
+      props: {
+        product: JSON.parse(JSON.stringify(product))
+      }
+    }
+  }
  

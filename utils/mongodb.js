@@ -1,15 +1,17 @@
 import mongoose from "mongoose";
 
+// const MONGODB_URI = process.env.MONGODB_URI;
+
 let cached = global.mongoose;
 
 if(!cached) {
-    cached = global.mongoose = {con: null, promise: null}
+    cached = global.mongoose = {conn: null, promise: null}
 }
 
 async function dbConnect () {
-    if(cached) {
-        console.log("DB Verbindung aktiv");
-        return cached.con;
+    if(cached.conn) {
+        //console.log("DB Verbindung aktiv");
+        return cached.conn;
     }
 
     if(!cached.promise) {
@@ -19,18 +21,25 @@ async function dbConnect () {
             bufferCommands: false,
         }
 
-        cached.promise = mongoose.connect(process.env.MONGODB_URI, options).then(mongoose => {
-            console.log("DB Verbindung gestartet");
+        cached.promise = mongoose.connect(process.env.MONGODB_URI, options).then((mongoose) => {
+            //console.log("DB Verbindung gestartet");
             return mongoose;
         })
     }
-    cached.con = await cached.promise;
-    return cached.con;
+
+    try {
+    cached.conn = await cached.promise;
+    } catch (e){
+        cached.promise = null;
+        throw(e);
+    }
+
+    return cached.conn;
 }
 
 async function dbDisconnect() {
     await mongoose.disconnect();
-    console.log("DB Verbindung beendet");
+    //console.log("DB Verbindung beendet");
 }
 
 const mongodb = {dbConnect, dbDisconnect}
